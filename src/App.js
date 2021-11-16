@@ -1,4 +1,8 @@
+import {Container, Row, Col} from 'react-bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 import {useState, useEffect} from 'react';
+
 
 import Header from './components/Header';
 import Main from './components/Main';
@@ -15,7 +19,6 @@ import data from './data';
 const cartFromLocalStorage = JSON.parse(localStorage.getItem('cart')) || JSON.parse('[]');
 
 function App() {
-
 
     const {products} = data;
     const [cartItems, setCartItems] = useState(cartFromLocalStorage)
@@ -55,27 +58,43 @@ function App() {
 
 
     const onSubmitOrder = (cartItems) => {
-        console.log("Cart submit: ", cartItems);
+        alert('Заказ принят! Смотри в консоль');
+        console.log(cartItems);
+        setCartItems([]);
+    };
+
+    const clearCart = () => {
+        // eslint-disable-next-line no-restricted-globals
+        if (confirm("Вы точно хотите очистить корзину?")) {
+            setCartItems([]);
+        }
     };
 
 
     return (
-        <div className="App">
+        <Container>
 
-            <Header countCartItems={cartItems.length}/>
+            <Row>
+                <Col lg='12'>
+                    <Header countCartItems={cartItems.length}/>
+                </Col>
 
-            <div className="row">
-                <Main products={products} onAdd={onAdd}/>
+                <Col lg='8'>
+                    <Main products={products} onAdd={onAdd}/>
+                </Col>
 
-                <Basket
-                    cartItems={cartItems}
-                    onAdd={onAdd}
-                    onRemove={onRemove}
-                    onSubmitOrder={onSubmitOrder}
-                />
-            </div>
+                <Col lg='4' className='mt-5'>
+                    <Basket
+                        cartItems={cartItems}
+                        onAdd={onAdd}
+                        onRemove={onRemove}
+                        onSubmitOrder={onSubmitOrder}
+                        clearCart={clearCart}
+                    />
+                </Col>
+            </Row>
 
-        </div>
+        </Container>
     );
 }
 

@@ -1,8 +1,10 @@
+import {Col, Row} from 'react-bootstrap';
+
 import React from 'react';
 
 export default function Basket(props) {
 
-    const {cartItems, onAdd, onRemove, onSubmitOrder} = props;
+    const {cartItems, onAdd, onRemove, onSubmitOrder, clearCart} = props;
 
     const itemsPrice = cartItems.reduce((a, c) => a + c.qty * c.price, 0);
     // const taxPrice = itemsPrice * 0.14;
@@ -10,65 +12,74 @@ export default function Basket(props) {
     const totalPrice = itemsPrice + shippingPrice;
 
     return (
-        <aside className="block col-1">
-            <h2>Корзина</h2>
-            <div>
+        <>
+
+            <h2 className='display-5 text-center mb-5'>Корзина</h2>
+            <Col>
 
                 {cartItems.length === 0 && <div>Корзина пустая, скорее наполняйте её</div>}
 
                 {cartItems.map((item) => (
-                    <div key={item.id} className="row">
-                        <div className="col-2">{item.name}</div>
-                        <div className="col-2">
-                            <button onClick={() => onRemove(item)} className="remove">
-                                -
-                            </button>
-                            {' '}
-                            <button onClick={() => onAdd(item)} className="add">
-                                +
-                            </button>
-                        </div>
+                    <div key={item.id}>
+                        <hr/>
+                        <Row>
+                            <Col lg='6'>{item.name}</Col>
 
-                        <div className="col-2 text-right">
-                            {item.qty} x ${item.price.toFixed(2)}
-                        </div>
+                            <Col lg='3' className='small'>
+                                {item.qty} x {item.price.toFixed(2)} грн
+                            </Col>
+
+                            <Col lg='3'>
+                                <button onClick={() => onRemove(item)} className="btn btn-danger">
+                                    -
+                                </button>
+                                {' '}
+                                <button onClick={() => onAdd(item)} className="btn btn-success">
+                                    +
+                                </button>
+                            </Col>
+
+
+                        </Row>
+
+
                     </div>
                 ))}
 
                 {cartItems.length !== 0 && (
                     <>
-                        <hr></hr>
-                        <div className="row">
-                            <div className="col-2">Стоимость:</div>
-                            <div className="col-1 text-right">{itemsPrice.toFixed(2)} грн</div>
-                        </div>
-
-
-                        <div className="row">
-                            <div className="col-2">Доставка:</div>
-                            <div className="col-1 text-right">
-                                {shippingPrice.toFixed(2)} грн
-                            </div>
-                        </div>
-
-                        <div className="row">
-
-                            <div className="col-2">
-                                <strong>Стоимость заказа:</strong>
-                            </div>
-                            <div className="col-1 text-right">
-                                <strong>{totalPrice.toFixed(2)} грн</strong>
-                            </div>
-                        </div>
                         <hr/>
+
+
+                        <Row>
+                            <Col lg='6'>Стоимость:</Col>
+                            <Col lg='6'>{itemsPrice.toFixed(2)} грн</Col>
+                        </Row>
+
+                        <Row>
+                            <Col lg='6'>Доставка:</Col>
+                            <Col lg='6'>{shippingPrice.toFixed(2)} грн</Col>
+                        </Row>
+
+                        <Row className='mt-4'>
+                            <Col lg='6' className='h5'>Стоимость заказа:</Col>
+                            <Col lg='6' className='h5'>{totalPrice.toFixed(2)} грн</Col>
+                        </Row>
+
+                        <hr/>
+
                         <div className="row">
-                            <button onClick={() => onSubmitOrder(cartItems)}>
+                            <button className='btn btn-success' onClick={() => onSubmitOrder(cartItems)}>
                                 Заказать
+                            </button>
+
+                            <button className='btn btn-danger' onClick={() => clearCart()}>
+                                Очистить корзину
                             </button>
                         </div>
                     </>
                 )}
-            </div>
-        </aside>
+            </Col>
+        </>
     );
 }

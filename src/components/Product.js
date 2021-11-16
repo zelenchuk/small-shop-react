@@ -1,24 +1,34 @@
+import {Col, Card} from 'react-bootstrap';
+
 import React from 'react';
 
 function Product(props) {
     const {product, onAdd} = props;
     return (
-        <div>
-            <img style={{'display': 'block', 'margin': '5px auto'}} className="small" src={product.image} alt={product.name}/>
-            <h3>{product.name}</h3>
+        <Col lg="4" className="my-3">
+            <Card>
+                <Card.Img variant="top" src={product.image} alt={product.name}/>
 
-            <p style={{'font-size': '11px'}}>
-                {product.info}
-            </p>
+                <Card.Body>
+                    <Card.Title>{product.name}</Card.Title>
 
-            <div style={{'text-align': 'center', 'font-weight': '700', 'margin':'20px 0 10px 0'}}>
-                {product.price} грн
-            </div>
+                    <Card.Text className='small'>
+                        {product.info}
+                    </Card.Text>
 
-            <div>
-                <button onClick={() => onAdd(product)}>В корзину</button>
-            </div>
-        </div>
+                    <div style={{'text-align': 'center', 'font-weight': '700', 'margin': '20px 0 10px 0'}}>
+                        {product.price} грн
+                    </div>
+
+                    <div>
+                        <button className='btn btn-primary' onClick={() => onAdd(product)}>В корзину</button>
+                    </div>
+
+
+                </Card.Body>
+
+            </Card>
+        </Col>
     );
 }
 
