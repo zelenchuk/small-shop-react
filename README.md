@@ -14,3 +14,6 @@
 
 Больше деталей -  [deployment](https://facebook.github.io/create-react-app/docs/deployment).
 
+
+
+![Alt Text](./public/shop.gif)
