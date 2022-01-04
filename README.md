@@ -17,3 +17,7 @@
 
 
 ![Alt Text](./public/shop.gif)
+
+
+
+Опубликован - [GitHub Pages](https://create-react-app.dev/docs/deployment/#github-pages)
